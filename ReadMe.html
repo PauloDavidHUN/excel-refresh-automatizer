@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>README Preview – Excel Refresh Automatizer</title>
+<style>
+  /* ── Reset & base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px 60px;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    max-width: 860px;
+    width: 100%;
+    padding: 40px 48px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.45);
+  }
+
+  /* ── Badges row ── */
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #58a6ff;
+    letter-spacing: .3px;
+  }
+  .badge.green  { color: #3fb950; border-color: #238636; background: #0d2a14; }
+  .badge.yellow { color: #d29922; border-color: #9e6a03; background: #271f00; }
+  .badge.gray   { color: #8b949e; }
+
+  /* ── Typography ── */
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #f0f6fc;
+    margin-bottom: 6px;
+    letter-spacing: -.3px;
+  }
+  .subtitle {
+    color: #8b949e;
+    font-size: 15px;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #f0f6fc;
+    border-bottom: 1px solid #21262d;
+    padding-bottom: 8px;
+    margin: 32px 0 14px;
+  }
+  h2:first-of-type { margin-top: 0; }
+
+  p { font-size: 14px; color: #c9d1d9; line-height: 1.7; margin-bottom: 10px; }
+
+  /* ── Lists ── */
+  ul, ol {
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+  li {
+    font-size: 14px;
+    color: #c9d1d9;
+    line-height: 1.8;
+  }
+  li strong { color: #e6edf3; }
+
+  /* ── Code blocks ── */
+  pre {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    margin: 10px 0 16px;
+  }
+  code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 13px;
+    color: #e6edf3;
+    line-height: 1.6;
+  }
+  p code, li code {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 12.5px;
+    color: #79c0ff;
+  }
+
+  /* ── File tree ── */
+  .tree {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    color: #e6edf3;
+    margin-bottom: 16px;
+  }
+  .tree .dir  { color: #58a6ff; }
+  .tree .file { color: #79c0ff; }
+  .tree .dim  { color: #484f58; }
+  .tree .comment { color: #8b949e; }
+
+  /* ── Step boxes ── */
+  .steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+  .step-num {
+    min-width: 26px; height: 26px;
+    background: #1f6feb;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #fff;
+    margin-top: 1px;
+  }
+  .step-text { font-size: 13.5px; color: #c9d1d9; line-height: 1.6; }
+  .step-text strong { color: #f0f6fc; }
+
+  /* ── Feature grid ── */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .feature {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .feature .icon { font-size: 20px; margin-bottom: 6px; }
+  .feature .title { font-size: 13px; font-weight: 600; color: #f0f6fc; margin-bottom: 4px; }
+  .feature .desc  { font-size: 12px; color: #8b949e; line-height: 1.5; }
+
+  /* ── Note box ── */
+  .note {
+    display: flex;
+    gap: 10px;
+    background: #161b22;
+    border: 1px solid #9e6a03;
+    border-left: 4px solid #d29922;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 14px 0;
+  }
+  .note .icon { font-size: 16px; margin-top: 1px; }
+  .note p { margin: 0; font-size: 13px; color: #c9d1d9; }
+
+  /* ── Task Scheduler section ── */
+  .ts-section {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 2px solid #30363d;
+  }
+
+  .ts-table-wrapper {
+    overflow-x: auto;
+    margin: 16px 0;
+    border-radius: 8px;
+    border: 1px solid #30363d;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead tr {
+    background: #1f6feb;
+  }
+  thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+  }
+  tbody tr {
+    border-bottom: 1px solid #21262d;
+    transition: background .15s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #21262d; }
+  tbody td {
+    padding: 10px 14px;
+    color: #c9d1d9;
+    vertical-align: top;
+  }
+  tbody td:first-child { color: #58a6ff; font-weight: 600; white-space: nowrap; }
+  tbody td:nth-child(2) { color: #79c0ff; font-weight: 500; white-space: nowrap; }
+  tbody td code {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 12px;
+    color: #79c0ff;
+  }
+
+  .ts-steps { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+  .ts-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+  .ts-step-num {
+    min-width: 26px; height: 26px;
+    background: #238636;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #fff;
+    margin-top: 1px;
+  }
+  .ts-step-text { font-size: 13.5px; color: #c9d1d9; line-height: 1.6; }
+  .ts-step-text strong { color: #f0f6fc; }
+
+  .info-box {
+    display: flex;
+    gap: 10px;
+    background: #0d2a14;
+    border: 1px solid #238636;
+    border-left: 4px solid #3fb950;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 14px 0;
+  }
+  .info-box .icon { font-size: 16px; margin-top: 1px; }
+  .info-box p { margin: 0; font-size: 13px; color: #c9d1d9; }
+
+  /* ── Divider ── */
+  hr { border: none; border-top: 1px solid #21262d; margin: 32px 0; }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 12px;
+    color: #484f58;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- BADGES -->
+  <div class="badges">
+    <span class="badge blue">Python 3.x</span>
+    <span class="badge blue">Windows</span>
+    <span class="badge blue">pywin32</span>
+    <span class="badge blue">Excel</span>
+  </div>
+
+  <!-- TITLE -->
+  <h1>⚡ Excel Refresh Automatizer</h1>
+  <p class="subtitle">
+    Automatically opens Excel workbooks, refreshes all data connections and pivot tables,
+    saves the result, and closes — fully unattended. Supports Box sync detection and
+    Windows Task Scheduler integration.
+  </p>
+
+  <!-- FEATURES -->
+  <h2>✨ What it does</h2>
+  <div class="features">
+    <div class="feature">
+      <div class="icon">🔄</div>
+      <div class="title">Connection Refresh</div>
+      <div class="desc">Refreshes all OLEDB data connections with background query disabled for reliability.</div>
+    </div>
+    <div class="feature">
+      <div class="icon">📊</div>
+      <div class="title">Pivot Table Refresh</div>
+      <div class="desc">Iterates every sheet and refreshes all pivot tables automatically.</div>
+    </div>
+    <div class="feature">
+      <div class="icon">📦</div>
+      <div class="title">Box Sync Aware</div>
+      <div class="desc">Waits for Box file sync to complete before opening — no corrupt reads.</div>
+    </div>
+    <div class="feature">
+      <div class="icon">🕒</div>
+      <div class="title">Task Scheduler Ready</div>
+      <div class="desc">Runs automatically on schedule via Windows Task Scheduler — no manual steps needed.</div>
+    </div>
+    <div class="feature">
+      <div class="icon">📝</div>
+      <div class="title">Detailed Logging</div>
+      <div class="desc">Logs every step to console and <code>refresh.log</code> with timestamps.</div>
+    </div>
+    <div class="feature">
+      <div class="icon">⚙️</div>
+      <div class="title">Easy Config</div>
+      <div class="desc">Add or remove Excel files in a single <code>config.py</code> — no code changes needed.</div>
+    </div>
+  </div>
+
+  <!-- REQUIREMENTS -->
+  <h2>📋 Requirements</h2>
+  <ul>
+    <li><strong>Python 3.x</strong> — tested on 3.10+</li>
+    <li><strong>Windows OS</strong> — uses Win32 COM to control Excel</li>
+    <li><strong>Microsoft Excel</strong> — must be installed</li>
+    <li><strong>pywin32</strong> — see <code>requirements.txt</code></li>
+  </ul>
+
+  <div class="note" style="border-color: #388bfd; border-left-color: #58a6ff; background: #0d1a2d;">
+     <span class="icon">💡</span>
+     <p>
+       <strong>No Python yet?</strong> If you don't have Python installed, check out my other project:<br>
+       <a href="https://github.com/PauloDavidHUN/python-for-office-offline" 
+          style="color: #58a6ff; text-decoration: none; font-weight: 600;"
+           target="_blank">
+          github.com/PauloDavidHUN/python-for-office-offline
+        </a>
+        <br>— a fully offline, portable Python environment ready to use.
+     </p>
+  </div>
+
+  <!-- QUICKSTART -->
+  <h2>🚀 Quickstart</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Clone the repo</strong><br>
+        <code>git clone https://github.com/PauloDavidHUN/excel-refresh-automatizer</code>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Install dependencies</strong><br>
+        <code>pip install -r requirements.txt</code>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Configure your paths</strong><br>
+         Rename <code>config.example.py<code> to <code>config.py<code> and update the paths to match your local environment.
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text"><strong>Run manually</strong><br>
+        <code>python refresh_starter.py</code>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-text"><strong>Schedule it (optional)</strong><br>
+        See the <strong>Task Scheduler How-To</strong> section at the bottom of this page for step-by-step instructions.
+      </div>
+    </div>
+  </div>
+
+<!-- FILE STRUCTURE -->
+<h2>📁 Project Structure</h2>
+<div class="tree">
+  <span class="dir">excel-refresh-automatizer/</span><br>
+  <span class="dim">│</span><br>
+  <span class="dim">├── </span><span class="file" style="color:#484f58;">config.py</span>           <span class="comment"># ← gitignored, not tracked</span><br>
+  <span class="dim">├── </span><span class="file">config.example.py</span>   <span class="comment"># ← template to copy from</span><br>
+  <span class="dim">├── </span><span class="file">refresh_starter.py</span>  <span class="comment"># ← entry point, run this</span><br>
+  <span class="dim">├── </span><span class="file">refresh_helper.py</span>   <span class="comment"># ← core logic</span><br>
+  <span class="dim">├── </span><span class="file">requirements.txt</span><br>
+  <span class="dim">├── </span><span class="file">.gitignore</span><br>
+  <span class="dim">├── </span><span class="file">HUN.txt</span>             <span class="comment"># ← Hungarian description</span><br>
+  <span class="dim">├── </span><span class="file">ReadMe.html</span>         <span class="comment"># ← visual README preview</span><br>
+  <span class="dim">└── </span><span class="file">README.md</span>
+</div>
+
+  <div class="note">
+    <span class="icon">⚠️</span>
+    <p><code>config.py</code> is listed in <code>.gitignore</code> and will never be committed. Always use <code>config.example.py</code> as the reference.</p>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <h2>🔍 How it works</h2>
+  <ol>
+    <li>Reads the file list from <code>config.py</code></li>
+    <li>Waits for Box cloud sync to finish (size-stability check)</li>
+    <li>Opens the workbook silently via Win32 COM</li>
+    <li>Disables background queries, then refreshes all connections</li>
+    <li>Waits for all background queries to finish</li>
+    <li>Refreshes every pivot table on every sheet</li>
+    <li>Saves and closes — Excel exits cleanly</li>
+  </ol>
+
+  <hr>
+
+  <!-- TASK SCHEDULER HOW-TO -->
+  <div class="ts-section">
+    <h2>🗓️ Task Scheduler How-To</h2>
+    <p>Follow these steps to set up an automated schedule in Windows Task Scheduler so the script runs without any manual intervention.</p>
+
+    <div class="ts-steps">
+      <div class="ts-step">
+        <div class="ts-step-num">1</div>
+        <div class="ts-step-text"><strong>Open Task Scheduler</strong><br>
+          Press <strong>Win + S</strong>, search for <em>Task Scheduler</em> and open it. Then click <strong>Create Task…</strong> in the right-hand Actions panel.
+        </div>
+      </div>
+      <div class="ts-step">
+        <div class="ts-step-num">2</div>
+        <div class="ts-step-text"><strong>General tab</strong><br>
+          Fill in the fields as described in the table below.
+        </div>
+      </div>
+      <div class="ts-step">
+        <div class="ts-step-num">3</div>
+        <div class="ts-step-text"><strong>Triggers tab</strong><br>
+          Click <strong>New…</strong> and set when the task should run (e.g. Daily at 06:00). See the table below for details.
+        </div>
+      </div>
+      <div class="ts-step">
+        <div class="ts-step-num">4</div>
+        <div class="ts-step-text"><strong>Actions tab</strong><br>
+          Click <strong>New…</strong> and point it to your Python executable and script. See the table below for the exact values.
+        </div>
+      </div>
+      <div class="ts-step">
+        <div class="ts-step-num">5</div>
+        <div class="ts-step-text"><strong>Conditions tab</strong><br>
+          Optionally uncheck <em>"Start the task only if the computer is on AC power"</em> if you want it to run on battery too.
+        </div>
+      </div>
+      <div class="ts-step">
+        <div class="ts-step-num">6</div>
+        <div class="ts-step-text"><strong>Settings tab</strong><br>
+          Enable <em>"Run task as soon as possible after a scheduled start is missed"</em> so it catches up after a reboot or sleep.
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="ts-table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Tab</th>
+            <th>Field</th>
+            <th>What to enter</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>General</td>
+            <td>Name</td>
+            <td>e.g. <code>Excel Refresh Automatizer</code></td>
+          </tr>
+          <tr>
+            <td>General</td>
+            <td>Description</td>
+            <td>e.g. <code>Auto-refreshes Excel workbooks daily</code></td>
+          </tr>
+          <tr>
+            <td>General</td>
+            <td>Security options</td>
+            <td>Select <em>"Run whether user is logged on or not"</em> + check <em>"Run with highest privileges"</em></td>
+          </tr>
+          <tr>
+            <td>Triggers</td>
+            <td>Begin the task</td>
+            <td><em>On a schedule</em></td>
+          </tr>
+          <tr>
+            <td>Triggers</td>
+            <td>Settings</td>
+            <td>Daily — set your preferred start time (e.g. <code>06:00:00</code>)</td>
+          </tr>
+          <tr>
+            <td>Triggers</td>
+            <td>Recur every</td>
+            <td><code>1</code> day</td>
+          </tr>
+          <tr>
+            <td>Actions</td>
+            <td>Action</td>
+            <td><em>Start a program</em></td>
+          </tr>
+          <tr>
+            <td>Actions</td>
+            <td>Program/script</td>
+            <td>Full path to your Python executable, e.g. <code>C:\Python310\python.exe</code> — find it with <code>where python</code> in CMD</td>
+          </tr>
+          <tr>
+            <td>Actions</td>
+            <td>Add arguments</td>
+            <td><code>refresh_starter.py</code></td>
+          </tr>
+          <tr>
+            <td>Actions</td>
+            <td>Start in</td>
+            <td>Full path to the project folder, e.g. <code>C:\Users\YourName\excel-refresh-automatizer</code></td>
+          </tr>
+          <tr>
+            <td>Conditions</td>
+            <td>Power</td>
+            <td>Uncheck <em>"Start only if on AC power"</em> if needed</td>
+          </tr>
+          <tr>
+            <td>Settings</td>
+            <td>If missed</td>
+            <td>Enable <em>"Run task as soon as possible after a scheduled start is missed"</em></td>
+          </tr>
+          <tr>
+            <td>Settings</td>
+            <td>If already running</td>
+            <td>Select <em>"Do not start a new instance"</em></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-box">
+      <span class="icon">💡</span>
+      <p>To find your Python path quickly, open <strong>Command Prompt</strong> and run <code>where python</code>. Copy the full path shown and paste it into the <em>Program/script</em> field.</p>
+    </div>
+
+    <div class="note">
+      <span class="icon">⚠️</span>
+      <p>Make sure the <strong>Start in</strong> field is set correctly — without it, Python won't find <code>config.py</code> and the script will fail silently.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <p style="font-size:13px; color:#8b949e; text-align:center;">
+    Built with Python · Win32 COM · pywin32 · Runs on Windows
+  </p>
+
+</div>
+
+<div class="footer">README.md preview — Excel Refresh Automatizer</div>
+
+</body></html>

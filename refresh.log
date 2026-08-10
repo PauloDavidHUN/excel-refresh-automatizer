@@ -1,0 +1,18 @@
+2026-08-05 11:14:09,221 - INFO - ==================================================
+2026-08-05 11:14:09,222 - INFO - Excel frissítő folyamat indul...
+2026-08-05 11:14:09,222 - INFO - Feldolgozás alatt: EXCEL_FILE1
+2026-08-05 11:14:09,222 - INFO - refresh_excel indul: C:\Users\user\Desktop\table\finally.xlsx
+2026-08-05 11:14:11,436 - INFO - Box szinkron ellenorzese: C:\Users\user\Desktop\table\finally.xlsx
+2026-08-05 11:14:11,436 - INFO - Meg szinkronizal... (0s) | Meret: 27.0 KB
+2026-08-05 11:14:17,439 - INFO - Fajl kesz! Meret: 27.0 KB | Ido: 6s
+2026-08-05 11:14:17,455 - INFO - Megnyitas: C:\Users\user\Desktop\table\finally.xlsx
+2026-08-05 11:14:18,230 - INFO - Kapcsolatok szama: 1
+2026-08-05 11:14:18,246 - INFO - Frissites: Lekérdezés - a_p
+2026-08-05 11:14:27,598 - INFO - Kesz: Lekérdezés - a_p
+2026-08-05 11:14:27,619 - INFO - Varakozas a hatterlekerdezesekre...
+2026-08-05 11:14:27,804 - INFO - Minden kapcsolat kesz. (0s)
+2026-08-05 11:14:27,820 - INFO - Pivotok frissitve: 0 db, hiba: 0 db
+2026-08-05 11:14:28,120 - INFO - Kesz! Mentve es bezarva.
+2026-08-05 11:14:28,124 - INFO - Excel leallitva.
+2026-08-05 11:14:28,397 - INFO - Minden feladat befejeződött.
+2026-08-05 11:14:28,397 - INFO - ==================================================

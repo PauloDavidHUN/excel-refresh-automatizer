@@ -1,0 +1,55 @@
+Excel Refresh Automatizáló
+
+Automatikusan megnyitja az Excel munkafüzeteket, frissíti az összes adatkapcsolatot és pivot táblát, 
+elmenti az eredményt, majd bezárja -- felügyelet nélkül. Támogatja a Box szinkronizáció észlelését 
+és a Windows Feladatütemező integrációt.
+
+
+Mit csinál?
+
+-Kapcsolat frissítés: Frissíti az összes OLEDB adatkapcsolatot, háttérlekérdezés letiltásával a megbízhatóság érdekében
+-Pivot tábla frissítés: Végigmegy minden munkalapon és automatikusan frissíti az összes pivot táblát
+-Box szinkron figyelés: Megvárja amíg a Box fájl szinkronizáció befejeződik -- nincs sérült olvasás
+-Feladatütemező kész: Automatikusan fut ütemezés szerint a Windows Feladatütemezőn keresztül
+-Részletes naplózás: Minden lépést naplóz a konzolra és a refresh.log fájlba időbélyeggel
+-Egyszerű konfiguráció: Adj hozzá vagy távolíts el Excel fájlokat egyetlen config.py fájlban -- nincs szükség kódmódosításra
+
+
+Követelmények:
+
+Python 3.x -- tesztelve 3.10+ verzión
+Windows operációs rendszer -- Win32 COM-ot használ az Excel vezérléséhez
+Microsoft Excel -- telepítve kell legyen
+pywin32 -- lásd requirements.txt
+
+Nincs még Python-od?
+
+Ha nincs Python telepítve a gépedre, nézd meg másik projektemet:
+https://github.com/PauloDavidHUN/python-for-office-offline
+-- teljesen offline, hordozható Python környezet, internetkapcsolat nélkül telepíthető.
+
+
+Használat:
+
+-Klónozd a repót git clone https://github.com/PauloDavidHUN/excel-refresh-automatizer
+-Telepítsd a függőségeket pip install -r requirements.txt
+-Állítsd be az elérési utakat Nevezd át a config.example.py fájlt config.py névre, 
+és frissítsd az elérési utakat a saját környezetednek megfelelően.
+-Futtasd kézzel python refresh_starter.py
+-Ütemezd be (opcionális) Lásd a Feladatütemező beállítása részt lentebb.
+
+Projektstruktúra
+excel-refresh-automatizer 
+
+ |-- config.py -- a te helyi elérési utaid (gitignored, nem követett) 
+ |-- config.example.py -- sablon, ebből másold 
+ |-- refresh_starter.py -- belépési pont, ezt futtasd 
+ |-- refresh_helper.py -- fő logika 
+ |-- requirements.txt 
+ |-- .gitignore 
+ |-- HUN.txt -- magyar leírás 
+ |-- ReadMe.html -- vizuális README előnézet 
+ |-- README.md
+
+
+Készült Python · Win32 COM · pywin32 · Windows rendszeren fut
